@@ -41,7 +41,7 @@ namespace CyberspawnsServer
                     if (responsDifference >= 5) //TODO : implement a better expire value
                     {
                         //Dont bother sending ping just kill the client
-                        item.Value.Disconnect();
+                        //item.Value.Disconnect();
                         continue;
                     }
                     item.Value.SendPing();
@@ -80,6 +80,7 @@ namespace CyberspawnsServer
                 case EventType.Pong:
                 case EventType.Ping:
                     client.lastPongTime = Core.Timer.TotalsecondsSinceStart;
+                    Logger.Log("Pong");
                     break;
                 case EventType.Message:
                     MessageHandler.Instance.HandleMessageAsync(client, datagram.body, datagram.id);
@@ -98,7 +99,7 @@ namespace CyberspawnsServer
         public void OnClientConnected(Client client)
         {
             connectedClientsWithEndpoint.TryAdd(client.ClientEndpoint, client);
-            client.SendDataGram(new Datagram(EventType.Connection, true));
+            client.SendDataGram(new Datagram(EventType.Connection, Guid.NewGuid().ToString()));
             Logger.LogInfo("New Connection Waiting for logging");
         }
 
