@@ -14,7 +14,7 @@ namespace CyberspawnsServer
     {
         [JsonIgnore]public EventType type => EventType.Login;
         public string token;
-        
+        public string userId;
     }
 
     public struct PongEvent : IEvent

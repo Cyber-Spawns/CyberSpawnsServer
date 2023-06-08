@@ -26,6 +26,8 @@ namespace CyberspawnsServer
         public string token;
         public string userID;
 
+        public string sessionId;
+
         public EndPoint ClientEndpoint => clientContext.ClientEndpoint;
 
         

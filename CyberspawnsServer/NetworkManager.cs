@@ -32,21 +32,21 @@ namespace CyberspawnsServer
 
         public void Update()
         {
-            if (Core.Timer.CheckTick())
-            {
+            //if (Core.Timer.CheckTick())
+            //{
                 
-                foreach (KeyValuePair<EndPoint, Client> item in connectedClientsWithEndpoint)
-                {
-                    double responsDifference = Core.Timer.TotalsecondsSinceStart - item.Value.lastPongTime;
-                    if (responsDifference >= 5) //TODO : implement a better expire value
-                    {
-                        //Dont bother sending ping just kill the client
-                        //item.Value.Disconnect();
-                        continue;
-                    }
-                    item.Value.SendPing();
-                }
-            }
+            //    foreach (KeyValuePair<EndPoint, Client> item in connectedClientsWithEndpoint)
+            //    {
+            //        double responsDifference = Core.Timer.TotalsecondsSinceStart - item.Value.lastPongTime;
+            //        if (responsDifference >= 5) //TODO : implement a better expire value
+            //        {
+            //            //Dont bother sending ping just kill the client
+            //            //item.Value.Disconnect();
+            //            continue;
+            //        }
+            //        item.Value.SendPing();
+            //    }
+            //}
         }
 
         public void OnReciveData(byte[] payload, int lenght, EndPoint sender)
@@ -99,16 +99,18 @@ namespace CyberspawnsServer
         public void OnClientConnected(Client client)
         {
             connectedClientsWithEndpoint.TryAdd(client.ClientEndpoint, client);
-            client.SendDataGram(new Datagram(EventType.Connection, Guid.NewGuid().ToString()));
-            Logger.LogInfo("New Connection Waiting for logging");
+            client.sessionId = Guid.NewGuid().ToString();
+            client.SendDataGram(new Datagram(EventType.Connection, client.sessionId));
+            //Logger.LogInfo("New Connection Waiting for logging");
         }
 
         public void OnClientDisconnected(int NetId, EndPoint endPoint, DisconnectionReasons disconnectionReasons)
         {
-            Logger.LogInfo(" DisConnection");
+            //Logger.LogInfo(" DisConnection");
             if (connectedClientsWithEndpoint.ContainsKey(endPoint))
             {
                 connectedClientsWithEndpoint.TryRemove(endPoint, out Client c);
+                
             }
         }
 
