@@ -32,21 +32,21 @@ namespace CyberspawnsServer
 
         public void Update()
         {
-            //if (Core.Timer.CheckTick())
-            //{
+            if (Core.Timer.CheckTick())
+            {
                 
-            //    foreach (KeyValuePair<EndPoint, Client> item in connectedClientsWithEndpoint)
-            //    {
-            //        double responsDifference = Core.Timer.TotalsecondsSinceStart - item.Value.lastPongTime;
-            //        if (responsDifference >= 5) //TODO : implement a better expire value
-            //        {
-            //            //Dont bother sending ping just kill the client
-            //            //item.Value.Disconnect();
-            //            continue;
-            //        }
-            //        item.Value.SendPing();
-            //    }
-            //}
+                foreach (KeyValuePair<EndPoint, Client> item in connectedClientsWithEndpoint)
+                {
+                    double responsDifference = Core.Timer.TotalsecondsSinceStart - item.Value.lastPongTime;
+                    if (responsDifference >= 5) //TODO : implement a better expire value
+                    {
+                        //Dont bother sending ping just kill the client
+                        //item.Value.Disconnect();
+                        continue;
+                    }
+                    item.Value.SendPing();
+                }
+            }
         }
 
         public void OnReciveData(byte[] payload, int lenght, EndPoint sender)
