@@ -1,4 +1,5 @@
 ﻿using CyberspawnsServer.Core;
+using CyberspawnsServer.Messages;
 using ENet;
 using Newtonsoft.Json;
 using QNetLib;
@@ -16,15 +17,17 @@ namespace CyberspawnsServer
     {
         public NetworkManager() {
             connectedClientsWithEndpoint = new ConcurrentDictionary<EndPoint, Client>();
+            messageHandler = new MessageHandler(this);
         }
 
         private Server server;
         public ConcurrentDictionary<EndPoint, Client> connectedClientsWithEndpoint;// Set of pending connections
         private static PongEvent pong = new();
-
+        private MessageHandler messageHandler;
 
         public void StartServer(string ip, int port)
         {
+           
             server = new Server(this);
             server.StartServer(ip, port);
 
@@ -69,21 +72,16 @@ namespace CyberspawnsServer
 
         public void HandleIncommingData(Client client, Datagram datagram)
         {
+            Console.WriteLine("Incomming data " + SerializationHelper.Serialize(datagram));
             EventType type = (EventType)Convert.ToInt32(datagram.type);
             switch (type)
             {
-                case EventType.Login:
-                    LoginEvent login = JsonConvert.DeserializeObject<LoginEvent>(datagram.body.ToString());
-                    
-
-                    break;
                 case EventType.Pong:
                 case EventType.Ping:
                     client.lastPongTime = Core.Timer.TotalsecondsSinceStart;
-                    Logger.Log("Pong");
                     break;
                 case EventType.Message:
-                    MessageHandler.Instance.HandleMessageAsync(client, datagram.body, datagram.id);
+                    MessageHandler.Instance.HandleMessageAsync(client, datagram);
                     break;
             }
         }
@@ -114,9 +112,9 @@ namespace CyberspawnsServer
             }
         }
 
-        public static void PublishMessage(short messageId, object body, Client client, object id)
+        public static void PublishMessage(Client client, short messageId, Message message, object clientCallbackId)
         {
-            Datagram gram = new Datagram(EventType.Message, MessageHandler.SerializeMessage(messageId, body), id);
+            Datagram gram = new(EventType.Message, MessageHandler.SerializeMessage(messageId, message), clientCallbackId);
             client.SendDataGram(gram);
         }
 

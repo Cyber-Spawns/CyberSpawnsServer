@@ -23,5 +23,10 @@ namespace CyberspawnsServer
         Disconnection
     }
 
-   
+    public enum SystemMessageType
+    {
+        Info,
+        Warn,
+        Error
+    }
 }

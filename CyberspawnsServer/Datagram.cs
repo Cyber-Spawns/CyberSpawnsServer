@@ -10,13 +10,13 @@ namespace CyberspawnsServer
         public EventType type;
         public object key;
         public object body;
-        public object id;
+        public object clientCallabckId;
 
         public Datagram(EventType type, object body, object id = null)
         {
             this.type = type;
             this.body = body;
-            this.id = id;
+            this.clientCallabckId = id;
         }
 
         public override string ToString()
