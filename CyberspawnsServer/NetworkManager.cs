@@ -10,14 +10,17 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using IO.Ably;
 
 namespace CyberspawnsServer
 {
     public class NetworkManager
     {
-        public NetworkManager() {
+        private readonly string _dbConfigString;
+        public NetworkManager(string dbConfigString) {
             connectedClientsWithEndpoint = new ConcurrentDictionary<EndPoint, Client>();
             messageHandler = new MessageHandler(this);
+            _dbConfigString = dbConfigString;
         }
 
         private Server server;
@@ -31,6 +34,11 @@ namespace CyberspawnsServer
             server = new Server(this);
             server.StartServer(ip, port);
 
+        }
+
+        public string FetchConnectionString()
+        {
+            return _dbConfigString;
         }
 
         public void Update()
@@ -72,7 +80,6 @@ namespace CyberspawnsServer
 
         public void HandleIncommingData(Client client, Datagram datagram)
         {
-            Console.WriteLine("Incomming data " + SerializationHelper.Serialize(datagram));
             EventType type = (EventType)Convert.ToInt32(datagram.type);
             switch (type)
             {
@@ -80,7 +87,9 @@ namespace CyberspawnsServer
                 case EventType.Ping:
                     client.lastPongTime = Core.Timer.TotalsecondsSinceStart;
                     break;
+
                 case EventType.Message:
+                    Logger.Log("Message Was Received!");
                     MessageHandler.Instance.HandleMessageAsync(client, datagram);
                     break;
             }
@@ -114,6 +123,7 @@ namespace CyberspawnsServer
 
         public static void PublishMessage(Client client, short messageId, Message message, object clientCallbackId)
         {
+            Console.WriteLine(message.ToString() + " MESSAGE");
             Datagram gram = new(EventType.Message, MessageHandler.SerializeMessage(messageId, message), clientCallbackId);
             client.SendDataGram(gram);
         }

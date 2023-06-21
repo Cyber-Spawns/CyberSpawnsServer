@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Data;
 using System.Text;
 
-namespace CyberSpawnsServer.DataAccess
+namespace CyberspawnsServer.DataAccess
 {
     public class ConnectionFactory : IConnectionFactory
     {

@@ -1,10 +1,10 @@
 ﻿
-using CyberSpawnsServer.DataAccess.Attributes;
+using CyberspawnsServer.DataAccess.Attributes;
 using System;
 using System.Reflection;
 
 
-namespace CyberSpawnsServer.DataAccess
+namespace CyberspawnsServer.DataAccess
 {
     public class BaseDbModel
     {

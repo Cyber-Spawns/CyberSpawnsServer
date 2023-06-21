@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace CyberspawnsServer.Playfab
 {
-    internal class LoginHandler
+    public class LoginHandler
     {
+        public void VerifyTokenPlayFabIdToken()
+        {
 
+        }
     }
 }

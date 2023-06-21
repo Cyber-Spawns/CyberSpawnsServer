@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CyberspawnsServer.Core\CyberspawnsServer.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="BouncyCastle.Crypto">
       <HintPath>..\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -21,6 +17,17 @@
 
   <ItemGroup>
     <Folder Include="Logic\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ably.io" Version="1.2.11" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CyberspawnsServer.Chat\CyberspawnsServer.Chat.csproj" />
+    <ProjectReference Include="..\CyberspawnsServer.Core\CyberspawnsServer.Core.csproj" />
+    <ProjectReference Include="..\CyberspawnsServer.DataAccess\CyberspawnsServer.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>

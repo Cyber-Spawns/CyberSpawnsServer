@@ -4,7 +4,7 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CyberSpawnsServer.DataAccess
+namespace CyberspawnsServer.DataAccess
 {
     public abstract class Repository<T> where T : class
     {

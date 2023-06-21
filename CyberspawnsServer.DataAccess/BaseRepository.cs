@@ -5,7 +5,7 @@ using Dapper;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CyberSpawnsServer.DataAccess
+namespace CyberspawnsServer.DataAccess
 {
     public delegate void Log(object message);
 
