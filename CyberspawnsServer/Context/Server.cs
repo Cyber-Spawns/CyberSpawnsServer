@@ -39,7 +39,6 @@ namespace CyberspawnsServer
 
         private void OnClientDisconnectedCallback(INetworkClient client, DisconnectionReasons disconnectionReasons)
         {
-            Console.WriteLine("Disconnected");
             AppThread.Schedule(() =>
             {
                 Console.WriteLine("Disconnected");
@@ -51,7 +50,7 @@ namespace CyberspawnsServer
         {
             AppThread.Schedule(() =>
             {
-                Logger.LogInfo("My Guy Connected Successfully");
+                Logger.LogInfo("Client with Id {0} connected", client.NetID);
                 Client connectedClient = new Client(client, networkManager);
                 networkManager.OnClientConnected(connectedClient);
             });
