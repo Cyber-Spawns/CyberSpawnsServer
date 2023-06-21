@@ -217,6 +217,7 @@ namespace CyberSpawnsServer.DataAccess
                 {
                     return conn.QueryFirst<T>(query, parameters, commandType : commandType);
                 }
+
             }
             catch (Exception ex)
             {

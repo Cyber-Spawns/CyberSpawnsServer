@@ -60,8 +60,6 @@ namespace CyberspawnsServer.Core
             }
             return false;
         }
-
-
     }
 
     internal static class DateTimeEx

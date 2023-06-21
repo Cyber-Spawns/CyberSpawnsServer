@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyberspawnsServer.Playfab",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyberspawnsServer.DataAccess", "CyberspawnsServer.DataAccess\CyberspawnsServer.DataAccess.csproj", "{30ABC414-A867-4D5C-BAEF-6A546D680A25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CyberspawnsServer.Core", "CyberspawnsServer.Core\CyberspawnsServer.Core.csproj", "{0E1367AE-9563-46CC-B525-7DF708DE1C29}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CyberspawnsServer.Core", "CyberspawnsServer.Core\CyberspawnsServer.Core.csproj", "{0E1367AE-9563-46CC-B525-7DF708DE1C29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

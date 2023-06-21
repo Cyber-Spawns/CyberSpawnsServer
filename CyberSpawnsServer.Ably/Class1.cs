@@ -1,4 +1,4 @@
-﻿namespace CyberspawnsServer.Chat
+﻿namespace CyberSpawnsServer.Ably
 {
     public class Class1
     {
