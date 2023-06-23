@@ -32,7 +32,6 @@ namespace CyberspawnsServer.Chat
 
         public async Task<UserModel> FetchUser(string userid)
         {
-            Console.WriteLine(userid + " User ID");
             var queryString = $"SELECT * FROM users WHERE playfabuserid=@Id OR playfabid=@Id;";
 
             return await QuerySingleAsync(queryString, new { Id = userid });

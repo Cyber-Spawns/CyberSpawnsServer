@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿
 using CyberspawnsServer.Core;
 using Newtonsoft.Json;
 using CyberspawnsServer.Chat;
-using Microsoft.Extensions.Configuration;
 using CyberspawnsServer.DataAccess;
 using CyberspawnsServer.DataAccess.Models;
 
@@ -88,7 +82,7 @@ namespace CyberspawnsServer.Messages
                 }
                 else
                 {
-                    Console.WriteLine("Message Handle dose noe exist");
+                    Console.WriteLine("Message Handle does not exist");
                 }
             }
         }
@@ -103,9 +97,7 @@ namespace CyberspawnsServer.Messages
             UserModel userData = await  user.FetchUser(loginMessage.userId);
             if (userData == null)
             {
-                Console.WriteLine(userData + " USERDATA " + loginMessage.playfabId + "  " + loginMessage.userId);
               int result = await user.StoreUser(new UserModel { id = Guid.NewGuid(), playfabid = loginMessage.playfabId, playfabuserid = loginMessage.userId});
-                Console.WriteLine($"Is successful! {result}");
             }
             NetworkManager.PublishMessage(client,MessageEvents.LOGIN_MESSAGE, loginMessage, id);
 
@@ -158,7 +150,6 @@ namespace CyberspawnsServer.Messages
                 Chats chat = new Chats(networkManager.FetchConnectionString(), logger);
 
                 UserModel userData = await user.FetchUser(chatRoomMessage.messageBody.creatorid);
-                Console.WriteLine(chatRoomMessage.messageBody.creatorid.ToString() + " CREATORID");
                 ChatRoomModel chatRoomData = await chatRoom.FetchChatRoom(chatRoomMessage.messageBody.id);
                 if (chatRoomData != null)
                 {
@@ -170,16 +161,13 @@ namespace CyberspawnsServer.Messages
 
                 if(chatRoomData == null)
                 {
-                    Console.WriteLine(userData + " UserData");
 
                    int result = await chatRoom.StoreChatRoom(new ChatRoomModel { id = chatRoomId, title = chatRoomMessage.messageBody.title, creatorid = userData.playfabuserid });
                     chatRoomData = await chatRoom.FetchChatRoom(chatRoomId);
-                    Console.WriteLine(chatRoomData + " CHATROOMDATA  RESULT: " + result + "  ChatroomId " + chatRoomMessage.messageBody.id);
                 }
                 chatRoomMessage.channelID = chatRoomData.id.ToString();
                 chatRoomMessage.chats = chatMessages;
                  
-                Console.WriteLine(chatRoomMessage.channelID + " CHANNEL ID  CALLBACKID" + id);
 
                 NetworkManager.PublishMessage(client, MessageEvents.CHAT_MESSAGE, chatRoomMessage, id);
                 await Task.FromResult<object>(null);

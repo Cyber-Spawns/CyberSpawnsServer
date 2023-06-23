@@ -17,7 +17,6 @@ namespace CyberspawnsServer.Chat
                 var queryString = $"INSERT INTO chatroom (id, title, creatorid) Values(@id, @title, @creatorid);";
 
                 int result = await ExecuteAsync(queryString, chatRoom);
-                Console.WriteLine("RESULT " + result);
                 return result;
             }
 

@@ -123,7 +123,6 @@ namespace CyberspawnsServer
 
         public static void PublishMessage(Client client, short messageId, Message message, object clientCallbackId)
         {
-            Console.WriteLine(message.ToString() + " MESSAGE");
             Datagram gram = new(EventType.Message, MessageHandler.SerializeMessage(messageId, message), clientCallbackId);
             client.SendDataGram(gram);
         }

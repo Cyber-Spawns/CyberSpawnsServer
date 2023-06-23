@@ -85,7 +85,6 @@ namespace CyberspawnsServer.Chat
             {
                 Console.WriteLine($"Received message <b>{message.Data}</b> from channel <b>{channelName}</b>");
             });
-            Console.WriteLine($"Successfully subscribed to channel <b>{channelName}</b>");
         }
 
         public async void PublishMessageToChatRoom(string messagePayload, string channelOrChatRoomId, string eventName)
