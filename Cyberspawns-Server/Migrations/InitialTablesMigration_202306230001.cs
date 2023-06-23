@@ -10,13 +10,13 @@ namespace CyberspawnServer.Migrations.Migrations
 {
     [Migration(202306230001)]
 
-    public class InitialTables_202306230001 : Migration
+    public class InitialTablesMigration_202306230001 : Migration
     {
 
             public override void Down()
             {
-                Delete.Table("Companies");
-                Delete.Table("Employee");
+                Delete.Table("Messages");
+                Delete.Table("ChatRoom");
             }
 
             public override void Up()
@@ -30,7 +30,7 @@ namespace CyberspawnServer.Migrations.Migrations
                     .WithColumn("MediaUrl").AsString(50).NotNullable()
                     .WithColumn("Timestamp").AsDateTime().NotNullable();
 
-                Create.Table("Employee")
+                Create.Table("ChatRoom")
                         .WithColumn("Id").AsGuid().NotNullable().PrimaryKey()
                         .WithColumn("Name").AsString(50).NotNullable()
                         .WithColumn("UserIds").AsString(int.MaxValue).NotNullable()
@@ -39,7 +39,5 @@ namespace CyberspawnServer.Migrations.Migrations
 
 
         }
-    }
-
     }
 }

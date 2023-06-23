@@ -6,7 +6,15 @@ using System.Threading.Tasks;
 
 namespace CyberspawnServer.Migrations.Entities
 {
-    internal class Messages
+    public class Messages
     {
+        public int Id { get; set; }
+        public string SenderId { get; set; }
+        public string ReceiveId { get; set; }
+        public string Content { get; set; }
+        public Guid ChatRoomId { get; set; }
+        public string MediaUrl { get; set; }
+        public DateTime Timestamp { get; set; }
+
     }
 }
