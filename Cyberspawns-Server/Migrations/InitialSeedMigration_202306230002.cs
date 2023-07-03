@@ -1,4 +1,4 @@
-﻿using CyberspawnServer.Migrations.Entities;
+﻿using CyberspawnsServer.DataAccess.Models;
 using FluentMigrator;
 using System;
 using System.Collections.Generic;
@@ -13,50 +13,76 @@ namespace CyberspawnServer.Migrations.Migrations
     {
             public override void Down()
             {
-                Delete.FromTable("Messages")
-                    .Row(new Messages
+                Delete.FromTable("chats")
+                    .Row(new
                     {
-                        SenderId = "#59c0d403",
-                        ReceiveId = "#b0e54e7c",
+                        Id = new Guid("f992e46e-7b95-4574-8b31-e485c92e0cd9"),
+                        ReceiverId = "#b0e54e7c",
                         Content = "How far!",
                         ChatRoomId = new Guid("67fbac34-1ee1-4697-b916-1748861dd275"),
                         MediaUrl = "https://pexels.com/wonder.png",
-                        Timestamp = DateTime.UtcNow
+                        UpdatedAt = DateTime.UtcNow,
+                        CreatedAt = DateTime.UtcNow
 
                     });
 
-                Delete.FromTable("ChatRoom")
-                    .Row(new ChatRoom
+                Delete.FromTable("chatroom")
+                    .Row(new ChatRoomModel
                     {
                         Id = new Guid("67fbac34-1ee1-4697-b916-1748861dd275"),
                         Name = "Test Address",
-                        UpdatedAt = "USA",
-                        CreatedAt = "Test name"
+                        UpdatedAt = DateTime.UtcNow,
+                        CreatedAt = DateTime.UtcNow
                     });
+
+                Delete.FromTable("chatroommembers")
+                        .Row(new ChatRoomMembersModel
+                        {
+                            Id = new Guid("d46ccdec-bdf6-4184-bd75-c008ff486786"),
+                            ChatRoomId = new Guid("67fbac34-1ee1-4697-b916-1748861dd275"),
+                            PlayerPlayfabId = "94C161535FB3CF34",
+                            UpdatedAt = DateTime.UtcNow,
+                            CreatedAt = DateTime.UtcNow
+                        });
             }
 
             public override void Up()
             {
-                Insert.IntoTable("Messages")
-                    .Row(new Messages
-                    {
-                        SenderId = "#59c0d403",
-                        ReceiveId = "#b0e54e7c",
-                        Content = "How far!",
-                        ChatRoomId = new Guid("67fbac34-1ee1-4697-b916-1748861dd275"),
-                        MediaUrl = "https://pexels.com/wonder.png",
-                        Timestamp = DateTime.UtcNow
 
-                    });
-                Insert.IntoTable("ChatRoom")
-                    .Row(new ChatRoom
+            Insert.IntoTable("chatroom")
+                    .Row(new ChatRoomModel
                     {
                         Id = new Guid("67fbac34-1ee1-4697-b916-1748861dd275"),
                         Name = "Test Address",
-                        UpdatedAt = "USA",
-                        CreatedAt = "Test name"
+                        UpdatedAt = DateTime.UtcNow,
+                        CreatedAt = DateTime.UtcNow
                     });
-            }
+
+            Insert.IntoTable("chatroommembers")
+                    .Row(new ChatRoomMembersModel
+                    {
+                        Id = new Guid("d46ccdec-bdf6-4184-bd75-c008ff486786"),
+                        ChatRoomId = new Guid("67fbac34-1ee1-4697-b916-1748861dd275"),
+                        PlayerPlayfabId = "94C161535FB3CF34",
+                        UpdatedAt = DateTime.UtcNow,
+                        CreatedAt = DateTime.UtcNow
+                    });
+
+            Insert.IntoTable("chats")
+                    .Row(new ChatModel
+                    {
+                        Id = new Guid("f992e46e-7b95-4574-8b31-e485c92e0cd9"),
+                        SenderPlayfabId = "#59c0d403",
+                        ReceiverPlayfabId = "#b0e54e7c",
+                        Content = "How far!",
+                        ChatRoomId = new Guid("67fbac34-1ee1-4697-b916-1748861dd275"),
+                        MediaUrl = "https://pexels.com/wonder.png",
+                        UpdatedAt = DateTime.UtcNow,
+                        CreatedAt = DateTime.UtcNow
+
+                    });
+                
+        }
     }
 }
 

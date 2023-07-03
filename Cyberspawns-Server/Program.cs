@@ -5,6 +5,7 @@ using System.Reflection;
 using CyberspawnServer.Migrations.Extensions;
 using CyberspawnServer.Migrations.Context;
 using CyberspawnServer.Migrations.Migrations;
+using CyberspawnsServer.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddSingleton<Database>();
 
 
 
+
 IConfiguration Configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true)
@@ -32,12 +34,10 @@ builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
             .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
 var app = builder.Build();
-string connectionStrings = builder.Configuration.GetConnectionString("Default");
 
 
-var serverManager = new ServerManager(connectionStrings);
+var serverManager = new ServerManager( new DataService(Configuration.GetConnectionString("Default")));
 serverManager.networkManager.StartServer("127.0.0.1", 1137);
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

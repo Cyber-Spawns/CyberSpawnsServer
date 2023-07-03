@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CyberspawnServer.Migrations\CyberspawnServer.Migrations.csproj" />
+    <ProjectReference Include="..\CyberspawnsServer.DataAccess\CyberspawnsServer.DataAccess.csproj" />
     <ProjectReference Include="..\CyberspawnsServer\CyberspawnsServer.csproj" />
   </ItemGroup>
 
