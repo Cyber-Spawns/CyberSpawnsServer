@@ -1,11 +1,11 @@
-using CyberspawnsServer;
 using FluentMigrator.Runner;
-using FluentMigrator.Postgres;
 using System.Reflection;
-using CyberspawnServer.Migrations.Extensions;
+
 using CyberspawnServer.Migrations.Context;
+using CyberspawnServer.Migrations.Extensions;
 using CyberspawnServer.Migrations.Migrations;
 using CyberspawnsServer.DataAccess;
+using CyberspawnsServer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,13 +30,13 @@ IConfiguration Configuration = new ConfigurationBuilder()
 builder.Services.AddLogging(c => c.AddFluentMigratorConsole())
         .AddFluentMigratorCore()
         .ConfigureRunner(c => c.AddPostgres11_0()
-            .WithGlobalConnectionString(Configuration.GetConnectionString("Default"))
+            .WithGlobalConnectionString(Configuration.GetConnectionString("DB"))
             .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
 
 var app = builder.Build();
 
 
-var serverManager = new ServerManager( new DataService(Configuration.GetConnectionString("Default")));
+var serverManager = new ServerManager(new DataService(Configuration.GetConnectionString("DB")), Configuration);
 serverManager.networkManager.StartServer("127.0.0.1", 1137);
 
 // Configure the HTTP request pipeline.
